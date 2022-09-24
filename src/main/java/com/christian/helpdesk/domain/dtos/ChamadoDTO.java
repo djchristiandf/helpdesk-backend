@@ -3,6 +3,8 @@ package com.christian.helpdesk.domain.dtos;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotNull;
+
 import com.christian.helpdesk.domain.Chamado;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -13,12 +15,18 @@ public class ChamadoDTO implements Serializable{
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataAbertura = LocalDate.now();	
 	@JsonFormat(pattern="dd/MM/yyyy")
-	private LocalDate dataFechamento;	
+	private LocalDate dataFechamento;
+	@NotNull(message = "O campos PRIORIDADE nao pode ser nulo.")
 	private Integer prioridade;
+	@NotNull(message = "O campos STATUS nao pode ser nulo.")
 	private Integer status;
+	@NotNull(message = "O campos TITULO nao pode ser nulo.")
 	private String titulo;
+	@NotNull(message = "O campos OBSERVACAO nao pode ser nulo.")
 	private String observacao;
+	@NotNull(message = "O campos TECNICO nao pode ser nulo.")
 	private Integer tecnico;
+	@NotNull(message = "O campos CLIENTE nao pode ser nulo.")
 	private Integer cliente;
 	private String nomeTecnico;
 	private String nomeCliente;
