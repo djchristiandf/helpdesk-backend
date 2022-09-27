@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.christian.helpdesk.domain.Cliente;
@@ -24,7 +25,10 @@ public class ClienteService {
 	
 	@Autowired
 	private PessoaRepository pessoaRepository;
-
+	
+	@Autowired
+	private BCryptPasswordEncoder encoder;
+	
 	public Cliente findClienteById(Integer id) {
 		Optional<Cliente> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found, id out of database: " + id));
@@ -36,6 +40,7 @@ public class ClienteService {
 	
 	public Cliente create(ClienteDTO objDTO) {
 		objDTO.setId(null);
+		objDTO.setSenha(encoder.encode(objDTO.getSenha()));
 		//validar CPF e email antes de salvar
 		validarPorCPFeEmail(objDTO);
 		Cliente newObj = new Cliente(objDTO);
